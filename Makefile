@@ -12,7 +12,7 @@ endif
 BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 
 # Image URL to use all building/pushing image targets
-IMG ?= ghcr.io/grafana/operator:latest
+IMG ?= 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-controller:v0.0.7rc-202108071259
 # Default dockerfile to build
 DOCKERFILE ?= "Dockerfile.controller"
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
@@ -99,7 +99,7 @@ generate: controller-gen
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./..."
 
 # Build the docker image
-docker-build: test
+docker-build:
 	docker build . -t ${IMG} -f ${DOCKERFILE}
 
 # Push the docker image
