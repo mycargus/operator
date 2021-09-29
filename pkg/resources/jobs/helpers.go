@@ -14,8 +14,8 @@ func newLabels(name string) map[string]string {
 	}
 }
 
-func newCommand(istioEnabled string) ([]string, bool) {
-	istio := true
+func newIstioCommand(istioEnabled string, inheritedCommands []string) ([]string, bool) {
+	istio := false
 	if istioEnabled != "" {
 		istio, _ = strconv.ParseBool(istioEnabled)
 	}
@@ -24,7 +24,12 @@ func newCommand(istioEnabled string) ([]string, bool) {
 	if istio {
 		command = append(command, "scuttle")
 	}
-	return append(command, "k6", "run"), istio
+
+	for _, inheritedCommand := range inheritedCommands {
+		command = append(command, inheritedCommand)
+	}
+
+	return command, istio
 }
 
 func newIstioEnvVar(istio v1alpha1.K6Scuttle, istioEnabled bool) []corev1.EnvVar {
