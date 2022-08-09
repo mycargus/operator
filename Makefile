@@ -12,7 +12,7 @@ endif
 BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 
 # Image version to use for all building/pushing image targets
-IMAGE_VERSION ?= v0.0.7rc2-202110131601
+IMAGE_VERSION ?= v0.0.7-202208081725
 
 # Image URL to use all building/pushing image targets
 IMG ?= 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-controller:${IMAGE_VERSION}
@@ -108,13 +108,13 @@ docker-build:
 	docker build . -t ${IMG} -f ${DOCKERFILE}
 
 docker-build-controller:
-	docker build . -t 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-controller:${IMAGE_VERSION} -f Dockerfile.controller
+	docker build --pull . -t 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-controller:${IMAGE_VERSION} -f Dockerfile.controller
 
 docker-build-runner:
-	docker build . -t 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-runner:${IMAGE_VERSION} -f Dockerfile.runner
+	docker build --pull . -t 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-runner:${IMAGE_VERSION} -f Dockerfile.runner
 
 docker-build-starter:
-	docker build . -t 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-starter:${IMAGE_VERSION} -f Dockerfile.starter
+	docker build --pull . -t 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-starter:${IMAGE_VERSION} -f Dockerfile.starter
 
 docker-push-controller:
 	docker tag 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-controller:${IMAGE_VERSION} 830473435438.dkr.ecr.us-west-2.amazonaws.com/k6-operator-controller:main
