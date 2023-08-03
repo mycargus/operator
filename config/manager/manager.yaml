@@ -14,6 +14,9 @@ metadata:
   namespace: system
   labels:
     control-plane: controller-manager
+    tags.datadoghq.com/env: "edge"
+    tags.datadoghq.com/service: "laasie-k6-operator-controller"
+    tags.datadoghq.com/version: "v0.0.10rc3-202308031215"
 spec:
   selector:
     matchLabels:
@@ -23,6 +26,9 @@ spec:
     metadata:
       labels:
         control-plane: controller-manager
+        tags.datadoghq.com/env: "edge"
+        tags.datadoghq.com/service: "laasie-k6-operator-controller"
+        tags.datadoghq.com/version: "v0.0.10rc3-202308031215"
     spec:
       serviceAccountName: k6-operator-controller
       containers:
@@ -39,4 +45,11 @@ spec:
             requests:
               cpu: 100m
               memory: 50Mi
+          env:
+            - name: DD_ENV # Note the datadog agent only supports literal values and doesn't work when DD_* env vars are set using fieldRef, configmap, or anything else.
+              value: "edge"
+            - name: DD_SERVICE
+              value: "laasie-k6-operator-controller"
+            - name: DD_VERSION
+              value: "v0.0.10rc3-202308031215"
       terminationGracePeriodSeconds: 10
